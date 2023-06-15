@@ -2,13 +2,16 @@ const menuEmail = document.querySelector(".navbar-email");
 const desktopMenu = document.querySelector(".desktop-menu")
 const menuHamIcon = document.querySelector(".menu")
 const menuCarritoIcon = document.querySelector(".navbar-shopping-cart")
+const productDetailCloseIcon = document.querySelector(".product-detail-close")
 const mobileMenu = document.querySelector(".mobile-menu")
 const shoppingCartContainer = document.querySelector("#shoppingCartContainer")
+const ProductDetailContainer = document.querySelector("#productDetail")
 const cardsContainer = document.querySelector(".cards-container")
 
 menuEmail.addEventListener("click", toggleDestopMenu);
 menuHamIcon.addEventListener("click", toggleMobileMenu);
 menuCarritoIcon.addEventListener("click", toggleCarritoAside);
+ProductDetailContainer.addEventListener("click", closeProductDetailAside);
 
 function toggleDestopMenu() {
 
@@ -31,7 +34,7 @@ function toggleMobileMenu() {
              shoppingCartContainer.classList.add("inactive");
          }
 
-
+    closeProductDetailAside();
 
     mobileMenu.classList.toggle("inactive");
 }
@@ -40,14 +43,28 @@ function toggleCarritoAside() {
 
 const isMobileMenuClosed = mobileMenu.classList.contains("inactive");
 const isDesktopMenuClosed = desktopMenu.classList.contains("inactive");
+const isProductDetailClosed = ProductDetailContainer.classList.contains("inactive");
     
    if(!isMobileMenuClosed) {
             mobileMenu.classList.add("inactive");
         } else if (!isDesktopMenuClosed) {
             desktopMenu.classList.add("inactive");
+        } else if (!isProductDetailClosed) {
+            ProductDetailContainer.classList.add("inactive");
         }
 
     shoppingCartContainer.classList.toggle("inactive");
+}
+
+function openProductDetailAside() {
+    shoppingCartContainer.classList.add("inactive");
+
+    ProductDetailContainer.classList.remove("inactive");
+}
+
+function closeProductDetailAside() {
+    ProductDetailContainer.classList.add("inactive");
+
 }
 
 const productList = [];
@@ -75,6 +92,7 @@ function renderProducts(arr) {
      
         const productImg = document.createElement("img");
         productImg.setAttribute("src", product.image);
+        productImg.addEventListener("click", openProductDetailAside);
      
         const productInfo = document.createElement("div");
         productInfo.classList.add("product-info");
